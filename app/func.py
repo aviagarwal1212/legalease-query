@@ -1,7 +1,7 @@
 import torch
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
-from transformers import AutoConfig, AutoModelForQuestionAnswering, AutoTokenizer, squad_convert_examples_to_features
+from transformers import squad_convert_examples_to_features
 from transformers.data.processors.squad import SquadResult, SquadV2Processor, SquadExample
 from transformers.data.metrics.squad_metrics import compute_predictions_logits
 
