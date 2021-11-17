@@ -9,13 +9,14 @@ import maps
 app = FastAPI(title = 'Query Analysis')
 
 def add_custom_query(questions, details, prompt_map, details_map):
-    for i in range(len(details)):
-        detail = details[i]
-        question = questions[i]
-        prompt = f"Highlight the parts (if any) of this contract related to '{question}' that should be reviewed by a lawyer. Details: {detail}"
-        prompt_map[question] = prompt
-        details_map[question] = detail
-        return prompt_map, details_map
+    if len(questions) > 0:
+        for i in range(len(details)):
+            detail = details[i]
+            question = questions[i]
+            prompt = f"Highlight the parts (if any) of this contract related to '{question}' that should be reviewed by a lawyer. Details: {detail}"
+            prompt_map[question] = prompt
+            details_map[question] = detail
+    return prompt_map, details_map
 
 @app.get('/')
 def home(request: Request):
@@ -34,7 +35,7 @@ def run_task(payload = Body(...)):
         'task_id': task.id
     })
 
-@app.get('/tasks/{tasks_id}')
+@app.get('/tasks/{task_id}')
 def get_status(task_id):
     task_result = AsyncResult(task_id)
     result = {

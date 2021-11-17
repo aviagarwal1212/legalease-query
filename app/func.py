@@ -100,5 +100,7 @@ def run_batch(contract, questions, prompt_map, details_map, model, tokenizer, de
     return {
         'answers': answers_list,
         'questions': questions_list,
-        'details': details_list
+        'details': details_list,
+        'anomalous_topics': ['Not yet implemented.'],
+        'anomalous_clauses': ['Not yet implemented.']
     }

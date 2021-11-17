@@ -18,7 +18,7 @@ else:
     print(f'Using CPU')
     device = torch.device('cpu')
 
-model_URI = 'models/reberta-large/'
+model_URI = 'models/roberta-large/'
 
 model = AutoModelForQuestionAnswering.from_pretrained(model_URI).to(device)
 tokenizer = AutoTokenizer.from_pretrained(model_URI, use_fast=False)
