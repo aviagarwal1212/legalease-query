@@ -97,6 +97,11 @@ def run_batch(contract, questions, prompt_map, details_map, model, tokenizer, de
             answers_list.append(final_predictions[p])
             details_list.append(details_map[questions[int(p)]])
 
+    if len(answers_list) == 0:
+        questions_list.append(' ')
+        answers_list.append('No answers found')
+        details_list.append(' ')
+
     return {
         'answers': answers_list,
         'questions': questions_list,
