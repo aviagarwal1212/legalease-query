@@ -6,7 +6,8 @@ from celery.result import AsyncResult
 from worker import create_task
 import maps
 
-app = FastAPI(title = 'Query Analysis')
+app = FastAPI(title='Query Analysis')
+
 
 def add_custom_query(questions, details, prompt_map, details_map):
     if len(questions) > 0:
@@ -18,22 +19,27 @@ def add_custom_query(questions, details, prompt_map, details_map):
             details_map[question] = detail
     return prompt_map, details_map
 
+
 @app.get('/')
 def home(request: Request):
     return {
         'status': True
     }
 
+
 @app.post('/tasks', status_code=201)
-def run_task(payload = Body(...)):
+def run_task(payload=Body(...)):
     contract = payload['contract']
     questions = payload.get('user_questions', [])
     details = payload.get('user_details', [])
-    prompt_map, details_map = add_custom_query(questions, details, maps.prompt_map, maps.details_map)
-    task = create_task.delay(contract, list(prompt_map.keys()), prompt_map, details_map)
+    prompt_map, details_map = add_custom_query(
+        questions, details, maps.prompt_map, maps.details_map)
+    task = create_task.delay(contract, list(
+        prompt_map.keys()), prompt_map, details_map)
     return JSONResponse({
         'task_id': task.id
     })
+
 
 @app.get('/tasks/{task_id}')
 def get_status(task_id):
